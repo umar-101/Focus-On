@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15.196" height="22.737" viewBox="0 0 15.196 22.737">
+  <g id="Group_17275" data-name="Group 17275" transform="translate(-4890.3 1913)">
+    <g id="Icon_feather-watch" data-name="Icon feather-watch" transform="translate(4891.3 -1912)">
+      <path id="Path_1951" data-name="Path 1951" d="M20.7,14.1a6.6,6.6,0,1,1-6.6-6.6A6.6,6.6,0,0,1,20.7,14.1Z" transform="translate(-7.5 -3.73)" fill="none" stroke="#dfdfdf" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_1953" data-name="Path 1953" d="M19.731,16.911l-.33,3.61a1.885,1.885,0,0,1-1.885,1.715H13.435a1.885,1.885,0,0,1-1.885-1.715l-.33-3.61m.009-10.085.33-3.61A1.885,1.885,0,0,1,13.435,1.5h4.1A1.885,1.885,0,0,1,19.42,3.215l.33,3.61" transform="translate(-8.882 -1.5)" fill="none" stroke="#dfdfdf" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    <path id="Icon_ionic-ios-heart" data-name="Icon ionic-ios-heart" d="M9.334,3.938h-.02A2.23,2.23,0,0,0,7.452,4.957,2.23,2.23,0,0,0,5.59,3.938H5.57a2.216,2.216,0,0,0-2.2,2.215,4.771,4.771,0,0,0,.937,2.6,16.42,16.42,0,0,0,3.14,3.025,16.42,16.42,0,0,0,3.14-3.025,4.771,4.771,0,0,0,.937-2.6A2.216,2.216,0,0,0,9.334,3.938Z" transform="translate(4890.265 -1909.175)" fill="#dfdfdf"/>
+  </g>
+</svg>

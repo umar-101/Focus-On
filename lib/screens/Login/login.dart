@@ -1,111 +1,168 @@
 import 'package:flutter/material.dart';
-import 'package:jsontoclass/size_config.dart';
+import 'package:jsontoclass/constants.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../../size_config.dart';
+import 'home.dart';
+
+List users = ['user', 'admin', 'host'];
+List passwords = ['system', 'password', '123456789'];
+
+class LoginScreen extends StatefulWidget {
   static String routeName = "/login";
+
   const LoginScreen({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 45, right: 45, top: 100, bottom: 35),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BuildSteric(),
-                BuildSteric(),
-                BuildSteric(),
-                BuildSteric(),
-              ],
-            ),
-          ),
-          // SizedBox(height: 50),
-          Spacer(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Expanded(
-              child: Container(
-                  child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: keyPadLetter(title: '1')),
-                      Expanded(child: keyPadLetter(title: '2')),
-                      Expanded(child: keyPadLetter(title: '3'))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(child: keyPadLetter(title: '4')),
-                      Expanded(child: keyPadLetter(title: '5')),
-                      Expanded(child: keyPadLetter(title: '6'))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(child: keyPadLetter(title: '7')),
-                      Expanded(child: keyPadLetter(title: '8')),
-                      Expanded(child: keyPadLetter(title: '9'))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(child: keyPadLetter(title: 'DEL')),
-                      Expanded(child: keyPadLetter(title: '0')),
-                      Expanded(child: keyPadLetter(title: 'BACK'))
-                    ],
-                  ),
-                ],
-              )),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class keyPadLetter extends StatelessWidget {
-  final String title;
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final passController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    nameController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
 
-  const keyPadLetter({
-    Key key,
-    this.title,
-  }) : super(key: key);
+  checkUser() {
+    var username = nameController.text;
+    var password = passController.text;
+
+    if (users.contains(username) && passwords.contains(password)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      decoration: BoxDecoration(
-        color: Color(0xFF242324),
-        border: Border.all(color: Color(0xFF3790A7), width: 2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 22, color: Colors.white),
+    SizeConfig().init(context);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              Image(
+                image: AssetImage('assets/images/appicon.png'),
+              ),
+              SizedBox(height: 20),
+              SizedBox(height: 20),
+              Text('LogIn', style: kLargeHeading.copyWith(color: kBlackColor)),
+              TextInputField(
+                obscureText: false,
+                hinttext: 'Enter your username',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter username';
+                  }
+                  return null;
+                },
+                controller: nameController,
+              ),
+              TextInputField(
+                hinttext: 'Password',
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  } else if (value.length < 6) {
+                    return 'Password must be atleast 6 characters';
+                  }
+                  return null;
+                },
+                controller: passController,
+              ),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  //listCheck();
+                  if (_formKey.currentState.validate()) {
+                    if (checkUser() == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('User not found')),
+                      );
+                    }
+                  }
+                },
+                child: Container(
+                  width: getProportionateScreenWidth(140),
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: kSecondaryColor.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Log In',
+                      style: kMediumHeading,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 100),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class BuildSteric extends StatelessWidget {
-  const BuildSteric({
+class TextInputField extends StatelessWidget {
+  final String hinttext;
+  final Function validator;
+  final TextEditingController controller;
+  final bool obscureText;
+
+  const TextInputField({
     Key key,
+    this.hinttext,
+    this.validator,
+    this.controller,
+    this.obscureText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '*',
-      style: TextStyle(
-          fontSize: 50, color: Colors.white, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(10),
+          horizontal: getProportionateScreenWidth(40)),
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                  width: 1,
+                  color: Color(0xFF3C54B4),
+                  style: BorderStyle.solid)),
+          child: TextFormField(
+            decoration: InputDecoration(
+                hintText: hinttext,
+                contentPadding: EdgeInsets.all(10),
+                border: InputBorder.none),
+            onChanged: (value) {},
+            validator: validator,
+            controller: controller,
+            obscureText: obscureText,
+          ),
+        ),
+      ),
     );
   }
 }

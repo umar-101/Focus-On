@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jsontoclass/screens/Receipt/receipt_screen.dart';
-import 'package:jsontoclass/screens/payment/payment.dart';
-import 'package:jsontoclass/screens/splash/splash.dart';
-
-import 'screens/Lock/lock.dart';
-import 'screens/home/home.dart';
-import 'screens/paymentProcess/payment_process.dart';
+import 'package:jsontoclass/screens/Login/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +22,7 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(
                 color: Color(0xFF797A7A),
               ))),
-      home: SplashScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jsontoclass/components/loginRegButtons.dart';
 import 'package:jsontoclass/constants.dart';
 
 import '../../size_config.dart';
-import 'home.dart';
 
-List users = ['user', 'admin', 'host'];
-List passwords = ['system', 'password', '123456789'];
+List users = ['user1', 'user2', 'user3'];
+List passwords = ['password1', 'password2', 'password3'];
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/login";
@@ -50,14 +50,34 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               SizedBox(height: 30),
-              Image(
-                image: AssetImage('assets/images/appicon.png'),
+              Container(
+                width: getProportionateScreenWidth(230),
+                height: getProportionateScreenHeight(210),
+                child: Image(
+                  image: AssetImage('assets/images/appicon.png'),
+                ),
               ),
               SizedBox(height: 20),
+              Row(
+                children: [
+                  LoginRegButton(
+                    press: () {
+                      Navigator.pushNamed(context, "/register");
+                    },
+                    title: 'Register',
+                    bgColor: Color(0xFFAFAFAF).withOpacity(0.2),
+                  ),
+                  LoginRegButton(
+                    press: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
+                    title: 'LogIn',
+                    bgColor: kWhiteColor,
+                  ),
+                ],
+              ),
               SizedBox(height: 20),
-              Text('LogIn', style: kLargeHeading.copyWith(color: kBlackColor)),
               TextInputField(
-                obscureText: false,
                 hinttext: 'Enter your username',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -69,12 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextInputField(
                 hinttext: 'Password',
-                obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
-                  } else if (value.length < 6) {
-                    return 'Password must be atleast 6 characters';
+                  } else if (value.length < 8) {
+                    return 'Password must be atleast 8 characters';
                   }
                   return null;
                 },
@@ -86,10 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   //listCheck();
                   if (_formKey.currentState.validate()) {
                     if (checkUser() == true) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
+                      Navigator.pushNamed(context, '/moodTrack');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('User not found')),
@@ -125,14 +141,12 @@ class TextInputField extends StatelessWidget {
   final String hinttext;
   final Function validator;
   final TextEditingController controller;
-  final bool obscureText;
 
   const TextInputField({
     Key key,
     this.hinttext,
     this.validator,
     this.controller,
-    this.obscureText,
   }) : super(key: key);
 
   @override
@@ -159,7 +173,6 @@ class TextInputField extends StatelessWidget {
             onChanged: (value) {},
             validator: validator,
             controller: controller,
-            obscureText: obscureText,
           ),
         ),
       ),

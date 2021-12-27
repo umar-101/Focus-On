@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:jsontoclass/routes.dart';
+
+import 'package:jsontoclass/screens/Chat/chat.dart';
+import 'package:jsontoclass/screens/Home/home.dart';
 import 'package:jsontoclass/screens/Login/login.dart';
+import 'package:jsontoclass/screens/Login/privacy_policy.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Focus On',
       debugShowCheckedModeBanner: false,
+      routes: routes,
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
           primarySwatch: Colors.blue,
@@ -22,7 +28,7 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(
                 color: Color(0xFF797A7A),
               ))),
-      home: LoginScreen(),
+      home: PrivacyPolicy(),
     );
   }
 }
